@@ -16,7 +16,7 @@ class Generator(object):
         self.trips = []
         self.routes = []
 
-    def generate(self, nodes, edges, signals, filename):
+    def generate(self, nodes, edges, signals, filename=None):
         self.uuids = []
         self.geo_nodes = []
         self.geo_points = []
@@ -41,26 +41,33 @@ class Generator(object):
         self.generate_trips([trip])
         self.generate_routes([])
 
+        result_string = ""
+        result_string = result_string + RootXML.get_prefix_xml()
+        result_string = result_string + RootXML.get_external_element_control_xml()
+
+        def add_list_to_result_string(_list):
+            nonlocal result_string
+            for entry in _list:
+                result_string = result_string + entry
+
+        add_list_to_result_string(self.routes)
+        add_list_to_result_string(self.geo_edges)
+        add_list_to_result_string(self.geo_nodes)
+        add_list_to_result_string(self.geo_points)
+        add_list_to_result_string(self.signals)
+        add_list_to_result_string(self.control_elements)
+        add_list_to_result_string(self.trips)
+        add_list_to_result_string(self.top_edges)
+        add_list_to_result_string(self.top_nodes)
+
+        result_string = result_string + RootXML.get_accommodation_xml()
+        result_string = result_string + RootXML.get_suffix(self.uuids)
+
+        if filename is None:
+            return result_string
+
         with open(f"{filename}.ppxml", "w") as out:
-            out.write(RootXML.get_prefix_xml())
-            out.write(RootXML.get_external_element_control_xml())
-
-            def write_list(_list, _out):
-                for entry in _list:
-                    _out.write(entry)
-
-            write_list(self.routes, out)
-            write_list(self.geo_edges, out)
-            write_list(self.geo_nodes, out)
-            write_list(self.geo_points, out)
-            write_list(self.signals, out)
-            write_list(self.control_elements, out)
-            write_list(self.trips, out)
-            write_list(self.top_edges, out)
-            write_list(self.top_nodes, out)
-
-            out.write(RootXML.get_accommodation_xml())
-            out.write(RootXML.get_suffix(self.uuids))
+            out.write(result_string)
 
     def generate_nodes(self, nodes):
         for node in nodes:
