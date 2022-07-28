@@ -65,3 +65,4 @@ local.properties
 #.project
 
 .idea
+__pycache__
