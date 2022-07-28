@@ -18,6 +18,30 @@ class Node(object):
         self.left_node = None
         self.right_node = None
 
+    def is_node_connected(self, node):
+        for connected_node in self.connected_nodes:
+            if connected_node.identifier == node.identifier:
+                return True
+        return False
+
+    def set_tip_node(self, node):
+        if self.is_node_connected(node):
+            self.tip_node = node
+        else:
+            raise ValueError("Can not set unconnected node as tip node. Connect the node first by creating an edge.")
+
+    def set_left_node(self, node):
+        if self.is_node_connected(node):
+            self.left_node = node
+        else:
+            raise ValueError("Can not set unconnected node as left node. Connect the node first by creating an edge.")
+
+    def set_right_node(self, node):
+        if self.is_node_connected(node):
+            self.right_node = node
+        else:
+            raise ValueError("Can not set unconnected node as right node. Connect the node first by creating an edge.")
+
     def get_uuids(self):
         return [self.geo_point_uuid, self.geo_node_uuid, self.top_node_uuid]
 
