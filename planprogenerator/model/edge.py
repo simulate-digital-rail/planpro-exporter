@@ -1,5 +1,6 @@
 import uuid
 import math
+import numpy as np
 
 
 class Edge(object):
@@ -22,8 +23,4 @@ class Edge(object):
         return [self.geo_edge_uuid, self.top_edge_uuid]
 
     def get_length(self):
-        min_x = min(self.node_a.x, self.node_b.x)
-        min_y = min(self.node_a.y, self.node_b.y)
-        max_x = max(self.node_a.x, self.node_b.x)
-        max_y = max(self.node_a.y, self.node_b.y)
-        return math.sqrt(math.pow(max_x - min_x, 2) + math.pow(max_y - min_y, 2))
+        return 2 * 6371000 * np.arcsin(math.sqrt(math.pow(np.sin((self.node_b.x - self.node_a.x)/2),2)+np.cos(self.node_a.x)*np.cos(self.node_b.x)*math.pow(np.sin((self.node_b.y - self.node_a.y)/2),2)))
