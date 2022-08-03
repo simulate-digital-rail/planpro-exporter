@@ -1,5 +1,6 @@
 from .planproxml import NodeXML, EdgeXML, SignalXML, RouteXML, RootXML, TripXML
 from .model import Trip
+from .routegenerator import RouteGenerator
 
 
 class Generator(object):
@@ -33,13 +34,17 @@ class Generator(object):
         for signal in signals:
             signal.trip = trip
 
+        # Create Routes
+        route_generator = RouteGenerator(nodes, edges, signals)
+        routes = route_generator.generate_routes()
+
         self.uuids = self.uuids + RootXML.get_root_uuids()
 
         self.generate_nodes(nodes)
         self.generate_edges(edges)
         self.generate_signals(signals)
         self.generate_trips([trip])
-        self.generate_routes([])
+        self.generate_routes(routes)
 
         result_string = ""
         result_string = result_string + RootXML.get_prefix_xml()
@@ -97,3 +102,5 @@ class Generator(object):
         for route in routes:
             if route.end_signal is None:
                 continue
+            self.uuids.append(route.route_uuid)
+            self.routes.append(RouteXML.get_route_xml(route))
