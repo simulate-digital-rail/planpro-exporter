@@ -1,7 +1,6 @@
 import uuid
 import math
 
-
 class Edge(object):
 
     def __init__(self, node_a, node_b):
@@ -22,8 +21,11 @@ class Edge(object):
         return [self.geo_edge_uuid, self.top_edge_uuid]
 
     def get_length(self):
-        min_x = min(self.node_a.x, self.node_b.x)
-        min_y = min(self.node_a.y, self.node_b.y)
-        max_x = max(self.node_a.x, self.node_b.x)
-        max_y = max(self.node_a.y, self.node_b.y)
-        return math.sqrt(math.pow(max_x - min_x, 2) + math.pow(max_y - min_y, 2))
+        return 2 * 6371000 * math.asin(
+            math.pi/180*math.sqrt(
+                math.pow(math.sin((math.pi/180*(self.node_b.x - self.node_a.x))/2),2)+
+                math.cos(math.pi/180*self.node_a.x)*
+                math.cos(math.pi/180*self.node_b.x)*
+                math.pow(math.sin((math.pi/180*(self.node_b.y - self.node_a.y))/2),2)
+            )
+        )
