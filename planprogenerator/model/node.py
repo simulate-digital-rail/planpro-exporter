@@ -87,7 +87,14 @@ class Node(object):
                 __min_y = min(__node_a.y, __node_b.y)
                 __max_x = max(__node_a.x, __node_b.x)
                 __max_y = max(__node_a.y, __node_b.y)
-                return math.sqrt(math.pow(__max_x - __min_x, 2) + math.pow(__max_y - __min_y, 2))
+                return 2 * 6371000 * math.asin(
+                    math.pi/180*math.sqrt(
+                    math.pow(math.sin((math.pi/180*(__node_b.x - __node_a.x))/2),2)+
+                    math.cos(math.pi/180*__node_a.x)*
+                    math.cos(math.pi/180*__node_b.x)*
+                    math.pow(math.sin((math.pi/180*(__node_b.y - __node_a.y))/2),2)
+                    )
+                )
 
             _a = length_of_side(_node_a, self)
             _b = length_of_side(self, _node_b)
