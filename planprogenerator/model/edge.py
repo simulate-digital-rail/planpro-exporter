@@ -23,9 +23,9 @@ class Edge(object):
     def get_length(self):
         return 2 * 6371000 * math.asin(
             math.pi/180*math.sqrt(
-                math.pow(math.sin((math.pi/180*(self.node_b.x - self.node_a.x))/2),2)+
-                math.cos(math.pi/180*self.node_a.x)*
-                math.cos(math.pi/180*self.node_b.x)*
-                math.pow(math.sin((math.pi/180*(self.node_b.y - self.node_a.y))/2),2)
+                math.pow(math.sin((math.pi/180*float(self.node_b.x - self.node_a.x))/2),2)+
+                math.cos(math.pi/180*float(self.node_a.x))*
+                math.cos(math.pi/180*float(self.node_b.x))*
+                math.pow(math.sin((math.pi/180*float(self.node_b.y - self.node_a.y))/2),2)
             )
         )
