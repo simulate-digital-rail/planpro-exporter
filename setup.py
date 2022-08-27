@@ -6,5 +6,5 @@ setup(
    description='A simple toolkit to generate planpro files',
    author='OSM@HPI',
    setup_requires=['wheel'],
-   packages=['planprogenerator', 'planprogenerator.model'],
+   packages=['planprogenerator', 'planprogenerator.model', 'planprogenerator.planproxml'],
 )
