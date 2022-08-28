@@ -1,5 +1,6 @@
 import uuid
 import math
+from decimal import Decimal
 
 
 class Node(object):
@@ -87,12 +88,13 @@ class Node(object):
                 __min_y = min(__node_a.y, __node_b.y)
                 __max_x = max(__node_a.x, __node_b.x)
                 __max_y = max(__node_a.y, __node_b.y)
+                pi_over_180  = Decimal(math.pi/180)
                 return 2 * 6371000 * math.asin(
                     math.pi/180*math.sqrt(
-                    math.pow(math.sin((math.pi/180*(__node_b.x - __node_a.x))/2),2)+
-                    math.cos(math.pi/180*__node_a.x)*
-                    math.cos(math.pi/180*__node_b.x)*
-                    math.pow(math.sin((math.pi/180*(__node_b.y - __node_a.y))/2),2)
+                    math.pow(math.sin((pi_over_180*(__node_b.x - __node_a.x))/2),2)+
+                    math.cos(pi_over_180*__node_a.x)*
+                    math.cos(pi_over_180*__node_b.x)*
+                    math.pow(math.sin((pi_over_180*(__node_b.y - __node_a.y))/2),2)
                     )
                 )
 
