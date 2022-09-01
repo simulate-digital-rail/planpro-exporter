@@ -1,7 +1,11 @@
+from planprogenerator.utils.helpers import dbref_coords
+
+
 class NodeXML(object):
 
     @staticmethod
-    def get_geo_point_xml(node):
+    def get_geo_point_xml(node, config):
+        x,y = dbref_coords(node.x, node.y, config.coord_representation)
         return f"            <GEO_Punkt> <!-- {node.identifier} -->\n" \
                + f"              <Identitaet>\n" \
                + f"                <Wert>{node.geo_point_uuid}</Wert>\n" \
@@ -14,10 +18,10 @@ class NodeXML(object):
                + f"              <Objektreferenzen/>\n" \
                + f"              <GEO_Punkt_Allg>\n" \
                + f"                <GK_X>\n" \
-               + f"                  <Wert>{node.x:.5f}</Wert>\n" \
+               + f"                  <Wert>{x:.5f}</Wert>\n" \
                + f"                </GK_X>\n" \
                + f"                <GK_Y>\n" \
-               + f"                  <Wert>{node.y:.5f}</Wert>\n" \
+               + f"                  <Wert>{y:.5f}</Wert>\n" \
                + f"                </GK_Y>\n" \
                + f"                <Plan_Quelle>\n" \
                + f"                  <Wert>Ivl</Wert>\n" \

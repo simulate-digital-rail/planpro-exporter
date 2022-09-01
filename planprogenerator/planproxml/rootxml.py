@@ -111,7 +111,7 @@ class RootXML(object):
              + f"               </Unterbringung>" + "\n"
 
     @staticmethod
-    def get_suffix(uuids):
+    def get_suffix(uuids, config):
         uuids_string = ""
         uuids.append(RootXML.external_element_control_uuid)
         uuids.append(RootXML.accommondation_uuid)
@@ -327,13 +327,13 @@ class RootXML(object):
              + f"                  </Identitaet>" + "\n" \
              + f"                  <Akteur_Allg>" + "\n" \
              + f"                    <Name_Akteur>" + "\n" \
-             + f"                      <Wert>Boockmeyer</Wert>" + "\n" \
+             + f"                      <Wert>{config.author}</Wert>" + "\n" \
              + f"                    </Name_Akteur>" + "\n" \
              + f"                    <Name_Akteur_10>" + "\n" \
-             + f"                      <Wert>Boockmeyer</Wert>" + "\n" \
+             + f"                      <Wert>{config.author[:10]}</Wert>" + "\n" \
              + f"                    </Name_Akteur_10>" + "\n" \
              + f"                    <Name_Akteur_5>" + "\n" \
-             + f"                      <Wert>Boock</Wert>" + "\n" \
+             + f"                      <Wert>{config.author[:5]}</Wert>" + "\n" \
              + f"                    </Name_Akteur_5>" + "\n" \
              + f"                  </Akteur_Allg>" + "\n" \
              + f"                  <Kontaktdaten>" + "\n" \
@@ -341,7 +341,7 @@ class RootXML(object):
              + f"                      <Wert>55555555-5555-5555-5555-555555555555</Wert>" + "\n" \
              + f"                    </Identitaet>" + "\n" \
              + f"                    <Name_Organisation>" + "\n" \
-             + f"                      <Wert>HPI-OSM</Wert>" + "\n" \
+             + f"                      <Wert>{config.organisation}</Wert>" + "\n" \
              + f"                    </Name_Organisation>" + "\n" \
              + f"                  </Kontaktdaten>" + "\n" \
              + f"                </Projektleiter>" + "\n" \

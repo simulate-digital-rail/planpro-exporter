@@ -1,3 +1,4 @@
+from .utils.config import Config
 from .planproxml import NodeXML, EdgeXML, SignalXML, RouteXML, RootXML, TripXML
 from .model import Trip
 from .routegenerator import RouteGenerator
@@ -16,8 +17,9 @@ class Generator(object):
         self.control_elements = []
         self.trips = []
         self.routes = []
+        self.config = None
 
-    def generate(self, nodes, edges, signals, filename=None):
+    def generate(self, nodes, edges, signals, config: Config, filename=None):
         self.uuids = []
         self.geo_nodes = []
         self.geo_points = []
@@ -28,6 +30,7 @@ class Generator(object):
         self.control_elements = []
         self.trips = []
         self.routes = []
+        self.config = config
 
         # Create Trip
         trip = Trip(edges)
@@ -66,7 +69,7 @@ class Generator(object):
         add_list_to_result_string(self.top_nodes)
 
         result_string = result_string + RootXML.get_accommodation_xml()
-        result_string = result_string + RootXML.get_suffix(self.uuids)
+        result_string = result_string + RootXML.get_suffix(self.uuids, self.config)
 
         if filename is None:
             return result_string
@@ -78,7 +81,7 @@ class Generator(object):
         for node in nodes:
             self.uuids = self.uuids + node.get_uuids()
             self.geo_nodes.append(NodeXML.get_geo_node_xml(node))
-            self.geo_points.append(NodeXML.get_geo_point_xml(node))
+            self.geo_points.append(NodeXML.get_geo_point_xml(node, self.config))
             self.top_nodes.append(NodeXML.get_top_node_xml(node))
 
     def generate_edges(self, edges):

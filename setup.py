@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
    name='planprogenerator',
@@ -6,6 +6,7 @@ setup(
    description='A simple toolkit to generate planpro files',
    author='OSM@HPI',
    setup_requires=['wheel'],
-   packages=['planprogenerator', 'planprogenerator.model', 'planprogenerator.planproxml'],
+   packages=find_packages(),
+   install_requires=['pyproj'],
    dependency_links=['https://github.com/arneboockmeyer/railway-route-generator']
 )

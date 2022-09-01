@@ -1,4 +1,4 @@
-from planprogenerator import Generator, Node, Edge, Signal
+from planprogenerator import Generator, Node, Edge, Signal, Config
 import re
 
 
@@ -124,6 +124,11 @@ with open(f"{filename}.input", "w") as input_file_output:
             input_file_output.write(f"{command}\n")
     if command == "generate":
         generator = Generator()
+        config = Config(
+            author_name="Arne Boockmeier",
+            organisation="HPI.OSM",
+            coord_representation='dbref'
+        )
         generator.generate(nodes, edges, signals, filename)
         print("Generation completed")
     print("Generator terminates.")
