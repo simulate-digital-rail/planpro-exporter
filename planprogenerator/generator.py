@@ -1,4 +1,4 @@
-from .utils.config import Config
+from .utils import Config
 from .planproxml import NodeXML, EdgeXML, SignalXML, RouteXML, RootXML, TripXML
 from .model import Trip
 from .routegenerator import RouteGenerator
