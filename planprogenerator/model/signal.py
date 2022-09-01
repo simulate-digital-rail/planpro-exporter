@@ -40,7 +40,7 @@ class Signal(object):
     def get_side_distance(self):
         if self.effective_direction == "in":
             return self.side_distance or 3.950
-        return -self.side_distance or -3.950
+        return -3.950 if self.side_distance is None else -self.side_distance
 
     def get_uuids(self):
         return [self.signal_uuid, self.control_member_uuid]
