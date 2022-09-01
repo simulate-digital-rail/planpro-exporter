@@ -5,12 +5,13 @@ import string
 
 class Signal(object):
 
-    def __init__(self, edge, distance_edge, effective_direction, function, kind):
+    def __init__(self, edge, distance_edge, effective_direction, function, kind, side_distance=None):
         self.signal_uuid = str(uuid.uuid4())
         self.trip = None
         self.edge = edge
-        self.distance_edge = distance_edge
+        self.distance_edge = distance_edge # distance to node A of the edge
         self.effective_direction = effective_direction.lower()
+        self.side_distance = side_distance
 
         if function in Signal.get_supported_functions():
             self.function = function
@@ -38,8 +39,8 @@ class Signal(object):
 
     def get_side_distance(self):
         if self.effective_direction == "in":
-            return 3.950
-        return -3.950
+            return self.side_distance or 3.950
+        return -self.side_distance or -3.950
 
     def get_uuids(self):
         return [self.signal_uuid, self.control_member_uuid]
