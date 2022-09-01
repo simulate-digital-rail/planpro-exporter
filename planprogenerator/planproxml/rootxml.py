@@ -327,13 +327,13 @@ class RootXML(object):
              + f"                  </Identitaet>" + "\n" \
              + f"                  <Akteur_Allg>" + "\n" \
              + f"                    <Name_Akteur>" + "\n" \
-             + f"                      <Wert>{config.author}</Wert>" + "\n" \
+             + f"                      <Wert>{config.author_name}</Wert>" + "\n" \
              + f"                    </Name_Akteur>" + "\n" \
              + f"                    <Name_Akteur_10>" + "\n" \
-             + f"                      <Wert>{config.author[:10]}</Wert>" + "\n" \
+             + f"                      <Wert>{config.author_name[:10]}</Wert>" + "\n" \
              + f"                    </Name_Akteur_10>" + "\n" \
              + f"                    <Name_Akteur_5>" + "\n" \
-             + f"                      <Wert>{config.author[:5]}</Wert>" + "\n" \
+             + f"                      <Wert>{config.author_name[:5]}</Wert>" + "\n" \
              + f"                    </Name_Akteur_5>" + "\n" \
              + f"                  </Akteur_Allg>" + "\n" \
              + f"                  <Kontaktdaten>" + "\n" \
