@@ -2,6 +2,8 @@ from .planproxml import NodeXML, EdgeXML, SignalXML, RouteXML, RootXML, TripXML
 from .model import Trip
 from .routegenerator import RouteGenerator
 
+import uuid
+
 
 class Generator(object):
 
@@ -76,16 +78,28 @@ class Generator(object):
 
     def generate_nodes(self, nodes):
         for node in nodes:
-            self.uuids = self.uuids + node.get_uuids()
-            self.geo_nodes.append(NodeXML.get_geo_node_xml(node))
-            self.geo_points.append(NodeXML.get_geo_point_xml(node))
+            self.uuids = self.uuids + node.get_uuids() + node.geo_node.get_uuids()
+            self.geo_nodes.append(NodeXML.get_geo_node_xml(node.geo_node, node.identifier))
+            self.geo_points.append(NodeXML.get_geo_point_xml(node.geo_node, node.identifier))
             self.top_nodes.append(NodeXML.get_top_node_xml(node))
 
     def generate_edges(self, edges):
         for edge in edges:
             self.uuids = self.uuids + edge.get_uuids()
             self.top_edges.append(EdgeXML.get_top_edge_xml(edge))
-            self.geo_edges.append(EdgeXML.get_geo_edge_xml(edge))
+            all_geo_nodes = [edge.node_a.geo_node] + edge.intermediate_geo_nodes + [edge.node_b.geo_node]
+            for i in range(len(all_geo_nodes)-1):
+                node_a = all_geo_nodes[i]
+                node_b = all_geo_nodes[i + 1]
+                geo_edge_uuid = str(uuid.uuid4())
+                self.uuids.append(geo_edge_uuid)
+                self.geo_edges.append(EdgeXML.get_geo_edge_xml(node_a, node_b, geo_edge_uuid, edge))
+
+            edge_identifier = f"{edge.node_a.identifier} to {edge.node_b.identifier}"
+            for intermediate_geo_node in edge.intermediate_geo_nodes:
+                self.uuids = self.uuids + intermediate_geo_node.get_uuids()
+                self.geo_nodes.append(NodeXML.get_geo_node_xml(intermediate_geo_node, edge_identifier))
+                self.geo_points.append(NodeXML.get_geo_point_xml(intermediate_geo_node, edge_identifier))
 
     def generate_signals(self, signals):
         for signal in signals:
