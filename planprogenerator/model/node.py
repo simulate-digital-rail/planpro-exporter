@@ -1,10 +1,7 @@
 import uuid
 import math
-<<<<<<< HEAD
 from decimal import Decimal
-=======
 from .geonode import GeoNode
->>>>>>> 783da7bed507d4490d00f2a5283c299c586a7942
 
 
 class Node(object):
@@ -85,27 +82,15 @@ class Node(object):
 
         def get_arc_between_nodes(_node_a, _node_b):
             def length_of_side(__node_a, __node_b):
-<<<<<<< HEAD
-                __min_x = min(__node_a.x, __node_b.x)
-                __min_y = min(__node_a.y, __node_b.y)
-                __max_x = max(__node_a.x, __node_b.x)
-                __max_y = max(__node_a.y, __node_b.y)
                 pi_over_180  = Decimal(math.pi/180)
                 return 2 * 6371000 * math.asin(
                     math.pi/180*math.sqrt(
-                    math.pow(math.sin((pi_over_180*(__node_b.x - __node_a.x))/2),2)+
-                    math.cos(pi_over_180*__node_a.x)*
-                    math.cos(pi_over_180*__node_b.x)*
-                    math.pow(math.sin((pi_over_180*(__node_b.y - __node_a.y))/2),2)
+                    math.pow(math.sin((pi_over_180*(__node_b.geo_node.x - __node_a.geo_node.x))/2),2)+
+                    math.cos(pi_over_180*__node_a.geo_node.x)*
+                    math.cos(pi_over_180*__node_b.geo_node.x)*
+                    math.pow(math.sin((pi_over_180*(__node_b.geo_node.y - __node_a.geo_node.y))/2),2)
                     )
                 )
-=======
-                __min_x = min(__node_a.geo_node.x, __node_b.geo_node.x)
-                __min_y = min(__node_a.geo_node.y, __node_b.geo_node.y)
-                __max_x = max(__node_a.geo_node.x, __node_b.geo_node.x)
-                __max_y = max(__node_a.geo_node.y, __node_b.geo_node.y)
-                return math.sqrt(math.pow(__max_x - __min_x, 2) + math.pow(__max_y - __min_y, 2))
->>>>>>> 783da7bed507d4490d00f2a5283c299c586a7942
 
             _a = length_of_side(_node_a, self)
             _b = length_of_side(self, _node_b)
