@@ -83,7 +83,7 @@ class Generator(object):
         for node in nodes:
             self.uuids = self.uuids + node.get_uuids() + node.geo_node.get_uuids()
             self.geo_nodes.append(NodeXML.get_geo_node_xml(node.geo_node, node.identifier))
-            self.geo_points.append(NodeXML.get_geo_point_xml(node.geo_node, self.config, node.identifier))
+            self.geo_points.append(NodeXML.get_geo_point_xml(node.geo_node, node.identifier, self.config))
             self.top_nodes.append(NodeXML.get_top_node_xml(node))
 
     def generate_edges(self, edges):
