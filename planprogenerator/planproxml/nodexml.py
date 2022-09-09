@@ -4,11 +4,11 @@ from planprogenerator.utils.helpers import dbref_coords
 class NodeXML(object):
 
     @staticmethod
-    def get_geo_point_xml(node, config):
-        x,y = dbref_coords(node.x, node.y, config.coord_representation)
-        return f"            <GEO_Punkt> <!-- {node.identifier} -->\n" \
+    def get_geo_point_xml(geonode, identifier, config):
+        x,y = dbref_coords(geonode.x, geonode.y, config.coord_representation)
+        return f"            <GEO_Punkt> <!-- {identifier} -->\n" \
                + f"              <Identitaet>\n" \
-               + f"                <Wert>{node.geo_point_uuid}</Wert>\n" \
+               + f"                <Wert>{geonode.geo_point_uuid}</Wert>\n" \
                + f"              </Identitaet>\n" \
                + f"              <Basis_Objekt_Allg>\n" \
                + f"                <Datum_Regelwerk>\n" \
@@ -31,15 +31,15 @@ class NodeXML(object):
                + f"                </GEO_KoordinatenSystem_LSys>\n" \
                + f"              </GEO_Punkt_Allg>\n" \
                + f"              <ID_GEO_Knoten>\n" \
-               + f"                <Wert>{node.geo_node_uuid}</Wert>\n" \
+               + f"                <Wert>{geonode.geo_node_uuid}</Wert>\n" \
                + f"              </ID_GEO_Knoten>\n" \
                + f"            </GEO_Punkt>\n"
 
     @staticmethod
-    def get_geo_node_xml(node):
-        return f"            <GEO_Knoten> <!-- {node.identifier} -->\n" \
+    def get_geo_node_xml(geonode, identifier):
+        return f"            <GEO_Knoten> <!-- {identifier} -->\n" \
                + f"              <Identitaet>\n" \
-               + f"                <Wert>{node.geo_node_uuid}</Wert>\n" \
+               + f"                <Wert>{geonode.geo_node_uuid}</Wert>\n" \
                + f"              </Identitaet>\n" \
                + f"              <Basis_Objekt_Allg>\n" \
                + f"                <Datum_Regelwerk>\n" \
@@ -62,7 +62,7 @@ class NodeXML(object):
                + f"              </Basis_Objekt_Allg>\n" \
                + f"              <Objektreferenzen/>\n" \
                + f"              <ID_GEO_Knoten>\n" \
-               + f"                <Wert>{node.geo_node_uuid}</Wert>\n" \
+               + f"                <Wert>{node.geo_node.geo_node_uuid}</Wert>\n" \
                + f"              </ID_GEO_Knoten>\n" \
                + f"            </TOP_Knoten>\n"
 
