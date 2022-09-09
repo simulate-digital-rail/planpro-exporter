@@ -102,7 +102,7 @@ class Generator(object):
             for intermediate_geo_node in edge.intermediate_geo_nodes:
                 self.uuids = self.uuids + intermediate_geo_node.get_uuids()
                 self.geo_nodes.append(NodeXML.get_geo_node_xml(intermediate_geo_node, edge_identifier))
-                self.geo_points.append(NodeXML.get_geo_point_xml(intermediate_geo_node, edge_identifier))
+                self.geo_points.append(NodeXML.get_geo_point_xml(intermediate_geo_node, edge_identifier, self.config))
 
     def generate_signals(self, signals):
         for signal in signals:
