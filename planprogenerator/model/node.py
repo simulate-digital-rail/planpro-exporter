@@ -1,18 +1,19 @@
 import uuid
 import math
+<<<<<<< HEAD
 from decimal import Decimal
+=======
+from .geonode import GeoNode
+>>>>>>> 783da7bed507d4490d00f2a5283c299c586a7942
 
 
 class Node(object):
 
     def __init__(self, identifier, x, y, desc):
         self.identifier = identifier
-        self.x = x
-        self.y = y
         self.desc = desc
         self.connected_nodes = []
-        self.geo_point_uuid = str(uuid.uuid4())
-        self.geo_node_uuid = str(uuid.uuid4())
+        self.geo_node = GeoNode(x, y)
         self.top_node_uuid = str(uuid.uuid4())
 
         self.tip_node = None
@@ -44,7 +45,7 @@ class Node(object):
             raise ValueError("Can not set unconnected node as right node. Connect the node first by creating an edge.")
 
     def get_uuids(self):
-        return [self.geo_point_uuid, self.geo_node_uuid, self.top_node_uuid]
+        return [self.top_node_uuid]
 
     def get_possible_successors(self, source):
         if len(self.connected_nodes) == 1:
@@ -84,6 +85,7 @@ class Node(object):
 
         def get_arc_between_nodes(_node_a, _node_b):
             def length_of_side(__node_a, __node_b):
+<<<<<<< HEAD
                 __min_x = min(__node_a.x, __node_b.x)
                 __min_y = min(__node_a.y, __node_b.y)
                 __max_x = max(__node_a.x, __node_b.x)
@@ -97,6 +99,13 @@ class Node(object):
                     math.pow(math.sin((pi_over_180*(__node_b.y - __node_a.y))/2),2)
                     )
                 )
+=======
+                __min_x = min(__node_a.geo_node.x, __node_b.geo_node.x)
+                __min_y = min(__node_a.geo_node.y, __node_b.geo_node.y)
+                __max_x = max(__node_a.geo_node.x, __node_b.geo_node.x)
+                __max_y = max(__node_a.geo_node.y, __node_b.geo_node.y)
+                return math.sqrt(math.pow(__max_x - __min_x, 2) + math.pow(__max_y - __min_y, 2))
+>>>>>>> 783da7bed507d4490d00f2a5283c299c586a7942
 
             _a = length_of_side(_node_a, self)
             _b = length_of_side(self, _node_b)
@@ -119,29 +128,29 @@ class Node(object):
                         current_max_arc = cur_arc
 
         # TODO: Replace this heuristic to determine which node is left and which is right with some suitable algorithm
-        if other_a.x < self.x and other_b.x < self.x:
-            if other_a.y < other_b.y:
+        if other_a.geo_node.x < self.geo_node.x and other_b.geo_node.x < self.geo_node.x:
+            if other_a.geo_node.y < other_b.geo_node.y:
                 self.left_node = other_a
                 self.right_node = other_b
             else:
                 self.left_node = other_b
                 self.right_node = other_a
-        elif other_a.x >= self.x and other_b.x >= self.x:
-            if other_a.y >= other_b.y:
+        elif other_a.geo_node.x >= self.geo_node.x and other_b.geo_node.x >= self.geo_node.x:
+            if other_a.geo_node.y >= other_b.geo_node.y:
                 self.left_node = other_a
                 self.right_node = other_b
             else:
                 self.left_node = other_b
                 self.right_node = other_a
-        elif other_a.y < self.y and other_b.y < self.y:
-            if other_a.x >= other_b.x:
+        elif other_a.geo_node.y < self.geo_node.y and other_b.geo_node.y < self.geo_node.y:
+            if other_a.geo_node.x >= other_b.geo_node.x:
                 self.left_node = other_a
                 self.right_node = other_b
             else:
                 self.left_node = other_b
                 self.right_node = other_a
-        elif other_a.y >= self.y and other_b.y >= self.y:
-            if other_a.x < other_b.x:
+        elif other_a.geo_node.y >= self.geo_node.y and other_b.geo_node.y >= self.geo_node.y:
+            if other_a.geo_node.x < other_b.geo_node.x:
                 self.left_node = other_a
                 self.right_node = other_b
             else:
