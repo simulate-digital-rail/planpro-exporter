@@ -21,7 +21,7 @@ To create the objects, use:
 ```python
 node = Node(<identifier>, <x>, <y>, <description>)
 edge = Edge(<node_a>, <node_b>)
-signal = Signal(<edge>, <distance>, <effective_direction>, <function>, <kind>)
+signal = Signal(<edge>, <distance>, <effective_direction>, <function>, <kind>, [<name>])
 ```
 
 So far, only nodes, edges and signals are supported. The signal function must be one of `Einfahr_Signal`, `Ausfahr_Signal`, `Blocksignal` or `andere` and the signal kind has to be one of `Hauptsignal`, `Mehrabschnittssignal`, `Vorsignal`, `Sperrsignal`, `Hauptsperrsignal` or `andere`. The effective direction is either `in` or `gegen`.
@@ -52,7 +52,7 @@ Start with entering the filename and afterwards create your objects:
 ```
 node <id> <x> <y> <description>
 edge <node id a> <node id b> [coords x1,y1 [x2,y2 ...]]
-signal <node id from> <node id to> <distance to node from> <function> <kind>
+signal <node id from> <node id to> <distance to node from> <function> <kind> [<name>]
 ```
 
 So far, only nodes, edges and signals are supported. The signal function must be one of `Einfahr_Signal`, `Ausfahr_Signal`, `Blocksignal` or `andere` and the signal kind has to be one of `Hauptsignal`, `Mehrabschnittssignal`, `Vorsignal`, `Sperrsignal`, `Hauptsperrsignal` or `andere`.
