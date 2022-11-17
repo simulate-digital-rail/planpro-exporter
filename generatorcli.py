@@ -24,7 +24,7 @@ def find_edge_by_nodes(_node_a, _node_b):
 print("Welcome to the PlanPro Generator")
 print("Usage:")
 print("Create a node (end or point): node <id> <x> <y> <description>")
-print("Create an edge: edge <node id a> <node id b>")
+print("Create an edge: edge <node id a> <node id b> [coords x1,y1 [x2,y2 ...]]")
 print("Create a signal: signal <node id from> <node id to> <distance to node from> <function> <kind>")
 print("Generate the plan pro file: generate")
 print("Exit without generate: exit")
