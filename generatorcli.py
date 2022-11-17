@@ -76,13 +76,16 @@ with open(f"{filename}.input", "w") as input_file_output:
                     edges.append(edge)
                 else:
                     print(f"The nodes {node_a_id} and {node_b_id} are already connected.")
-        elif re.match(r'signal [a-zA-Z_0-9]+ [a-zA-Z_0-9]+ -?\d+(\.\d+)? .+ .+', command):
+        elif re.match(r'signal [a-zA-Z_0-9]+ [a-zA-Z_0-9]+ -?\d+(\.\d+)? .+ \S+( \S)?', command):
             splits = command.split(" ")
             node_a_id = splits[1]
             node_b_id = splits[2]
             distance = float(splits[3])
             function = splits[4]
             kind = splits[5]
+            element_name = None
+            if len(splits) > 6:
+                element_name = splits[6]
 
             if function not in Signal.get_supported_functions():
                 print(f"Function {function} is not supported. Choose any from: {Signal.get_supported_functions()}")
@@ -115,7 +118,7 @@ with open(f"{filename}.input", "w") as input_file_output:
                 effective_direction = "gegen"
                 distance = edge.get_length() - distance
 
-            signal = Signal(edge, distance, effective_direction, function, kind)
+            signal = Signal(edge, distance, effective_direction, function, kind, element_name=element_name)
             signals.append(signal)
         elif command != "generate" and command != "exit":
             print("Command does not exists")
