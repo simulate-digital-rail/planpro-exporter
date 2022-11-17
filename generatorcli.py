@@ -1,4 +1,4 @@
-from planprogenerator import Generator, Node, Edge, Signal
+from planprogenerator import Generator, Node, Edge, Signal, GeoNode
 import re
 
 
@@ -24,7 +24,7 @@ def find_edge_by_nodes(_node_a, _node_b):
 print("Welcome to the PlanPro Generator")
 print("Usage:")
 print("Create a node (end or point): node <id> <x> <y> <description>")
-print("Create an edge: edge <node id a> <node id b>")
+print("Create an edge: edge <node id a> <node id b> [coords x1,y1 [x2,y2 ...]]")
 print("Create a signal: signal <node id from> <node id to> <distance to node from> <function> <kind>")
 print("Generate the plan pro file: generate")
 print("Exit without generate: exit")
@@ -55,7 +55,7 @@ with open(f"{filename}.input", "w") as input_file_output:
                 nodes.append(node)
             else:
                 print(f"Node with id {identifier} already exists. Please use a different id.")
-        elif re.match(r'edge [a-zA-Z_0-9]+ [a-zA-Z_0-9]+', command):
+        elif re.match(r'edge [a-zA-Z_0-9]+ [a-zA-Z_0-9]+ (coords (-?\d+(\.\d+)?,-?\d+(\.\d+)?)+)?', command):
             splits = command.split(" ")
             node_a_id = splits[1]
             node_b_id = splits[2]
@@ -74,6 +74,14 @@ with open(f"{filename}.input", "w") as input_file_output:
                     node_a.connected_nodes.append(node_b)
                     node_b.connected_nodes.append(node_a)
                     edges.append(edge)
+
+                    # Intermediate nodes
+                    for i in range(4, len(splits)):
+                        intermediate_node = splits[i]
+                        x = float(intermediate_node.split(",")[0]) + 4533770.0
+                        y = float(intermediate_node.split(",")[1]) + 5625780.0
+                        geo_node = GeoNode(x, y)
+                        edge.intermediate_geo_nodes.append(geo_node)
                 else:
                     print(f"The nodes {node_a_id} and {node_b_id} are already connected.")
         elif re.match(r'signal [a-zA-Z_0-9]+ [a-zA-Z_0-9]+ -?\d+(\.\d+)? .+ \S+( \S)?', command):
