@@ -22,8 +22,20 @@ class Edge(object):
         return [self.top_edge_uuid]
 
     def get_length(self):
-        geo_node_a = self.node_a.geo_node
-        geo_node_b = self.node_b.geo_node
+        if len(self.intermediate_geo_nodes) == 0:
+            return self.get_distance_between_two_geo_nodes(self.node_a.geo_node, self.node_b.geo_node)
+
+        total_length = self.get_distance_between_two_geo_nodes(self.node_a.geo_node, self.intermediate_geo_nodes[0])
+
+        for i in range(len(self.intermediate_geo_nodes) - 1):
+            geo_node_a = self.intermediate_geo_nodes[i]
+            geo_node_b = self.intermediate_geo_nodes[i + 1]
+            total_length += self.get_distance_between_two_geo_nodes(geo_node_a, geo_node_b)
+
+        total_length += self.get_distance_between_two_geo_nodes(self.intermediate_geo_nodes[-1], self.node_b.geo_node)
+        return total_length
+
+    def get_distance_between_two_geo_nodes(self, geo_node_a, geo_node_b):
         pi_over_180  = Decimal(math.pi/180)
         return 2 * 6371000 * math.asin(
             math.pi/180*math.sqrt(

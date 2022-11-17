@@ -5,7 +5,7 @@ import string
 
 class Signal(object):
 
-    def __init__(self, edge, distance_edge, effective_direction, function, kind, side_distance=None):
+    def __init__(self, edge, distance_edge, effective_direction, function, kind, side_distance=None, element_name=None):
         self.signal_uuid = str(uuid.uuid4())
         self.trip = None
         self.edge = edge
@@ -24,7 +24,7 @@ class Signal(object):
             self.kind = Signal.get_supported_kinds()[0]
 
         self.classification_number = "60"
-        self.element_name = Signal.get_random_element_name()
+        self.element_name = element_name or Signal.get_random_element_name()
         self.control_member_uuid = str(uuid.uuid4())
 
     def get_node_before(self):
