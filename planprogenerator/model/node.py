@@ -71,6 +71,10 @@ class Node(object):
 
         if other.identifier == self.tip_node.identifier:
             return "Spitze"
+        # In case of two points forming two edges, we should return "Links" AND "Rechts", 
+        # but only "sonstige" is defined as an alternative in the PlanPro definitions..
+        if other.identifier == self.left_node.identifier and other.identifier == self.right_node.identifier:
+            return "sonstige"
         if other.identifier == self.left_node.identifier:
             return "Links"
         if other.identifier == self.right_node.identifier:
