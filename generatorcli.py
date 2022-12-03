@@ -55,7 +55,7 @@ with open(f"{filename}.input", "w") as input_file_output:
                 nodes.append(node)
             else:
                 print(f"Node with id {identifier} already exists. Please use a different id.")
-        elif re.match(r'edge [a-zA-Z_0-9]+ [a-zA-Z_0-9]+ (coords (-?\d+(\.\d+)?,-?\d+(\.\d+)?)+)?', command):
+        elif re.match(r'edge [a-zA-Z_0-9]+ [a-zA-Z_0-9]+(coords (-?\d+(\.\d+)?,-?\d+(\.\d+)?)+)?', command):
             splits = command.split(" ")
             node_a_id = splits[1]
             node_b_id = splits[2]
