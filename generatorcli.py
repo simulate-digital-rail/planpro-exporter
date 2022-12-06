@@ -1,4 +1,5 @@
-from planprogenerator import Generator, Node, Edge, Signal, GeoNode
+from planprogenerator import Generator
+from yaramo.model import Node, Edge, Signal, GeoNode
 import re
 
 
@@ -9,7 +10,7 @@ signals = []
 
 def find_node_with_identifier(_identifier):
     for _node in nodes:
-        if _node.identifier == _identifier:
+        if _node.uuid == _identifier:
             return _node
     return None
 
@@ -51,7 +52,8 @@ with open(f"{filename}.input", "w") as input_file_output:
 
             if find_node_with_identifier(identifier) is None:
                 is_valid = True
-                node = Node(identifier, x, y, desc)
+                node = Node(uuid=identifier)
+                node.geo_node = GeoNode(x, y)
                 nodes.append(node)
             else:
                 print(f"Node with id {identifier} already exists. Please use a different id.")
@@ -73,6 +75,7 @@ with open(f"{filename}.input", "w") as input_file_output:
                     edge = Edge(node_a, node_b)
                     node_a.connected_nodes.append(node_b)
                     node_b.connected_nodes.append(node_a)
+                    edge.update_length()
                     edges.append(edge)
 
                     # Intermediate nodes
