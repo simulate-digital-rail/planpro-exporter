@@ -1,10 +1,15 @@
 from yaramo.model import GeoNode, Node
 
+from planprogenerator.config import Config
+from planprogenerator.helpers import convert_coords
+
+
 
 class NodeXML(object):
 
     @staticmethod
-    def get_geo_point_xml(geonode: GeoNode, identifier: str):
+    def get_geo_point_xml(geonode: GeoNode, identifier: str, config: Config):
+        x,y = convert_coords(geonode.x, geonode.y, config.coord_representation)
         return f"            <GEO_Punkt> <!-- {identifier} -->\n" \
                + f"              <Identitaet>\n" \
                + f"                <Wert>{geonode.geo_point.uuid}</Wert>\n" \
@@ -17,10 +22,10 @@ class NodeXML(object):
                + f"              <Objektreferenzen/>\n" \
                + f"              <GEO_Punkt_Allg>\n" \
                + f"                <GK_X>\n" \
-               + f"                  <Wert>{geonode.geo_point.x:.5f}</Wert>\n" \
+               + f"                  <Wert>{x:.5f}</Wert>\n" \
                + f"                </GK_X>\n" \
                + f"                <GK_Y>\n" \
-               + f"                  <Wert>{geonode.geo_point.y:.5f}</Wert>\n" \
+               + f"                  <Wert>{y:.5f}</Wert>\n" \
                + f"                </GK_Y>\n" \
                + f"                <Plan_Quelle>\n" \
                + f"                  <Wert>Ivl</Wert>\n" \
