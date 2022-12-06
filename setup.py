@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-   name='planprogenerator',
+   name='planproexporter',
    version='1.0',
    description='A simple toolkit to generate planpro files',
    author='OSM@HPI',
