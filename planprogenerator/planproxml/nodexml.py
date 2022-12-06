@@ -9,7 +9,7 @@ class NodeXML(object):
 
     @staticmethod
     def get_geo_point_xml(geonode: GeoNode, identifier: str, config: Config):
-        x,y = convert_coords(geonode.x, geonode.y, config.coord_representation)
+        x,y = convert_coords(geonode.geo_point.x, geonode.geo_point.y, config.coord_representation)
         return f"            <GEO_Punkt> <!-- {identifier} -->\n" \
                + f"              <Identitaet>\n" \
                + f"                <Wert>{geonode.geo_point.uuid}</Wert>\n" \

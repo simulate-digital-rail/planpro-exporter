@@ -1,7 +1,6 @@
 from typing import Literal
 import pyproj
 
-from planprogenerator.model.node import Node
 
 def convert_coords(x, y, coord_representation: Literal['wgs84', 'dbref']):
     if coord_representation == 'wgs84':
