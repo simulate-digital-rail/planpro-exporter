@@ -1,1 +1,1 @@
-from .generator import Generator
+from .generator import Generator, Config
