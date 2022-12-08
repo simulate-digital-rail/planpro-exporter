@@ -74,14 +74,15 @@ class Generator(object):
 
     def generate_nodes(self, nodes):
         for node in nodes:
-            self.uuids = [self.uuids, node.uuid, node.geo_node.uuid]
+            self.uuids.append(node.uuid)
+            self.uuids.append(node.geo_node.uuid)
             self.geo_nodes.append(NodeXML.get_geo_node_xml(node.geo_node, node.uuid))
             self.geo_points.append(NodeXML.get_geo_point_xml(node.geo_node, node.uuid, self.config))
             self.top_nodes.append(NodeXML.get_top_node_xml(node))
 
     def generate_edges(self, edges):
         for edge in edges:
-            self.uuids = [self.uuids, edge.uuid]
+            self.uuids.append(edge.uuid)
             self.top_edges.append(EdgeXML.get_top_edge_xml(edge))
             all_geo_nodes = (
                 [edge.node_a.geo_node]
@@ -99,7 +100,7 @@ class Generator(object):
 
             edge_identifier = f"{edge.node_a.uuid} to {edge.node_b.uuid}"
             for intermediate_geo_node in edge.intermediate_geo_nodes:
-                self.uuids = self.uuids + intermediate_geo_node.uuid
+                self.uuids.append(intermediate_geo_node.uuid)
                 self.geo_nodes.append(
                     NodeXML.get_geo_node_xml(intermediate_geo_node, edge_identifier)
                 )
@@ -109,7 +110,7 @@ class Generator(object):
 
     def generate_signals(self, signals):
         for signal in signals:
-            self.uuids = self.uuids + signal.uuid
+            self.uuids.append(signal.uuid)
             self.control_elements.append(SignalXML.get_control_memeber_xml(signal))
             self.signals.append(SignalXML.get_signal_xml(signal))
 
