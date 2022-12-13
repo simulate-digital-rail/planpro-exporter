@@ -1,7 +1,7 @@
 from yaramo.model import GeoNode, Node
 
 from planprogenerator.config import Config
-from planprogenerator.helpers import convert_coords
+from yaramo.helpers import convert_coords
 
 
 

@@ -43,11 +43,7 @@ class EdgeXML(object):
 
     @staticmethod
     def get_geo_edge_xml(geo_node_a: GeoNode, geo_node_b: GeoNode, uuid, top_edge: Edge):
-        min_x = min(geo_node_a.geo_point.x, geo_node_b.geo_point.x)
-        min_y = min(geo_node_a.geo_point.y, geo_node_b.geo_point.y)
-        max_x = max(geo_node_a.geo_point.x, geo_node_b.geo_point.x)
-        max_y = max(geo_node_a.geo_point.y, geo_node_b.geo_point.y)
-        length = math.sqrt(math.pow(max_x - min_x, 2) + math.pow(max_y - min_y, 2))
+        length = geo_node_a.get_distance_to_other_geo_node(geo_node_b)
 
         return f"            <GEO_Kante> <!-- {top_edge.node_a.uuid} to {top_edge.node_b.uuid} -->\n" \
              + f"              <Identitaet>\n" \
