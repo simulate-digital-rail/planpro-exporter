@@ -1,0 +1,22 @@
+[[package]]
+name = "yaramo"
+version = "0.1.0"
+description = ""
+category = "main"
+optional = false
+python-versions = "^3.10"
+develop = false
+
+[package.source]
+type = "git"
+url = "https://github.com/simulate-digital-rail/yaramo.git"
+reference = "HEAD"
+resolved_reference = "297384506cfecb7d7bdca13d4c2e34a4a518afb6"
+
+[metadata]
+lock-version = "1.1"
+python-versions = "^3.10"
+content-hash = "fad5ddd144ad0e638fb38f7c2e0c6896f054c41234262ddbfac93eb475dfd24c"
+
+[metadata.files]
+yaramo = []

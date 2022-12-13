@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "planpro-exporter"
+version = "0.9"
+description = ""
+authors = ["OSM@HPI"]
+readme = "README.md"
+packages = [{include = "planpro_exporter"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+yaramo = {git = "https://github.com/simulate-digital-rail/yaramo.git"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
