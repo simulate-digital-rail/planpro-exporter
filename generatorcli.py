@@ -1,4 +1,4 @@
-from planprogenerator import Generator, Node, Edge, Signal, GeoNode
+from planprogexporter import Generator, Node, Edge, Signal, GeoNode
 import re
 
 
