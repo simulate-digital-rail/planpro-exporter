@@ -1,7 +1,7 @@
 from typing import List
 from planprogenerator.config import Config
 from .planproxml import NodeXML, EdgeXML, SignalXML, RouteXML, RootXML, TripXML
-from yaramo.model import Trip, Node, Edge, Signal
+from yaramo.model import Topology, Trip, Signal, Route, Edge, Node
 
 import uuid
 
@@ -19,7 +19,7 @@ class Generator(object):
         self.trips = []
         self.routes = []
 
-    def generate(self, nodes: List[Node], edges: List[Edge], signals: List[Signal], config: Config, filename=None):
+    def generate(self, topology: Topology, config: Config, filename=None):
         self.uuids = []
         self.geo_nodes = []
         self.geo_points = []
@@ -33,16 +33,17 @@ class Generator(object):
         self.config = config
 
         # Create Trip
-        trip = Trip(edges)
-        for signal in signals:
+        trip = Trip(topology.edges.values())
+        for signal in topology.signals:
             signal.trip = trip
 
         self.uuids = self.uuids + RootXML.get_root_uuids()
 
-        self.generate_nodes(nodes)
-        self.generate_edges(edges)
-        self.generate_signals(signals)
+        self.generate_nodes(topology.nodes.values())
+        self.generate_edges(topology.edges.values())
+        self.generate_signals(topology.signals.values())
         self.generate_trips([trip])
+        self.generate_routes(topology.routes)
 
         result_string = ""
         result_string = result_string + RootXML.get_prefix_xml()
@@ -72,7 +73,7 @@ class Generator(object):
         with open(f"{filename}.ppxml", "w") as out:
             out.write(result_string)
 
-    def generate_nodes(self, nodes):
+    def generate_nodes(self, nodes: List[Node]):
         for node in nodes:
             self.uuids.append(node.uuid)
             self.uuids.append(node.geo_node.uuid)
@@ -80,7 +81,7 @@ class Generator(object):
             self.geo_points.append(NodeXML.get_geo_point_xml(node.geo_node, node.uuid, self.config))
             self.top_nodes.append(NodeXML.get_top_node_xml(node))
 
-    def generate_edges(self, edges):
+    def generate_edges(self, edges: List[Edge]):
         for edge in edges:
             self.uuids.append(edge.uuid)
             self.top_edges.append(EdgeXML.get_top_edge_xml(edge))
@@ -108,18 +109,18 @@ class Generator(object):
                     NodeXML.get_geo_point_xml(intermediate_geo_node, edge_identifier, self.config)
                 )
 
-    def generate_signals(self, signals):
+    def generate_signals(self, signals: List[Signal]):
         for signal in signals:
             self.uuids.append(signal.uuid)
             self.control_elements.append(SignalXML.get_control_memeber_xml(signal))
             self.signals.append(SignalXML.get_signal_xml(signal))
 
-    def generate_trips(self, trips):
+    def generate_trips(self, trips: List[Trip]):
         for trip in trips:
             self.uuids.append(trip.uuid)
             self.trips.append(TripXML.get_trip_xml(trip))
 
-    def generate_routes(self, routes):
+    def generate_routes(self, routes: List[Route]):
         for route in routes:
             if route.end_signal is None:
                 continue
