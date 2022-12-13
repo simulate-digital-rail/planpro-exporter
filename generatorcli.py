@@ -1,22 +1,22 @@
 from planprogenerator import Generator
-from yaramo.model import Node, Edge, Signal, GeoNode
+from yaramo.model import Node, Edge, Signal, GeoNode, Topology
 import re
 
+from planprogenerator.config import Config
 
-nodes = []
-edges = []
-signals = []
+
+topology = Topology()
 
 
 def find_node_with_identifier(_identifier):
-    for _node in nodes:
+    for _node in topology.nodes.values():
         if _node.uuid == _identifier:
             return _node
     return None
 
 
 def find_edge_by_nodes(_node_a, _node_b):
-    for _edge in edges:
+    for _edge in topology.edges.values():
         if _edge.is_node_connected(_node_a) and _edge.is_node_connected(_node_b):
             return _edge
     return None
@@ -54,7 +54,7 @@ with open(f"{filename}.input", "w") as input_file_output:
                 is_valid = True
                 node = Node(uuid=identifier)
                 node.geo_node = GeoNode(x, y)
-                nodes.append(node)
+                topology.nodes[node.uuid]=node
             else:
                 print(f"Node with id {identifier} already exists. Please use a different id.")
         elif re.match(r'edge [a-zA-Z_0-9]+ [a-zA-Z_0-9]+(coords (-?\d+(\.\d+)?,-?\d+(\.\d+)?)+)?', command):
@@ -76,7 +76,7 @@ with open(f"{filename}.input", "w") as input_file_output:
                     node_a.connected_nodes.append(node_b)
                     node_b.connected_nodes.append(node_a)
                     edge.update_length()
-                    edges.append(edge)
+                    topology.edges[edge.uuid]=edge
 
                     # Intermediate nodes
                     for i in range(4, len(splits)):
@@ -130,7 +130,7 @@ with open(f"{filename}.input", "w") as input_file_output:
                 distance = edge.get_length() - distance
 
             signal = Signal(edge, distance, effective_direction, function, kind, element_name=element_name)
-            signals.append(signal)
+            topology.signals[signal.uuid] = signal
         elif command != "generate" and command != "exit":
             print("Command does not exists")
 
@@ -138,6 +138,6 @@ with open(f"{filename}.input", "w") as input_file_output:
             input_file_output.write(f"{command}\n")
     if command == "generate":
         generator = Generator()
-        generator.generate(nodes, edges, signals, filename)
+        generator.generate(topology, Config(author_name="Arne Boockmeier", organisation="HPI.OSM", coord_representation='dbref'), filename=filename)
         print("Generation completed")
     print("Generator terminates.")
