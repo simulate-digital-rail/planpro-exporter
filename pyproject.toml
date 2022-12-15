@@ -4,7 +4,7 @@ version = "0.9"
 description = ""
 authors = ["OSM@HPI"]
 readme = "README.md"
-packages = [{include = "planpro_exporter"}]
+packages = [{include = "planproexporter"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
