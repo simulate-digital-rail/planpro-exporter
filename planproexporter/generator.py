@@ -31,15 +31,15 @@ class Generator(object):
         self.routes = []
 
         # Create Trip
-        trip = Trip(topology.edges.values())
-        for signal in topology.signals:
+        trip = Trip(list(topology.edges.values()))
+        for signal in topology.signals.values():
             signal.trip = trip
 
         self.uuids = self.uuids + RootXML.get_root_uuids()
 
-        self.generate_nodes(topology.nodes.values())
-        self.generate_edges(topology.edges.values())
-        self.generate_signals(topology.signals.values())
+        self.generate_nodes(list(topology.nodes.values()))
+        self.generate_edges(list(topology.edges.values()))
+        self.generate_signals(list(topology.signals.values()))
         self.generate_trips([trip])
         self.generate_routes(topology.routes)
 

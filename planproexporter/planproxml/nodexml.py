@@ -1,4 +1,4 @@
-from yaramo.model import GeoNode, Node
+from yaramo.model import Node, GeoNode
 
 class NodeXML(object):
 
@@ -16,10 +16,10 @@ class NodeXML(object):
                + f"              <Objektreferenzen/>\n" \
                + f"              <GEO_Punkt_Allg>\n" \
                + f"                <GK_X>\n" \
-               + f"                  <Wert>{x:.5f}</Wert>\n" \
+               + f"                  <Wert>{geonode.geo_point.x:.5f}</Wert>\n" \
                + f"                </GK_X>\n" \
                + f"                <GK_Y>\n" \
-               + f"                  <Wert>{y:.5f}</Wert>\n" \
+               + f"                  <Wert>{geonode.geo_point.y:.5f}</Wert>\n" \
                + f"                </GK_Y>\n" \
                + f"                <Plan_Quelle>\n" \
                + f"                  <Wert>Ivl</Wert>\n" \
