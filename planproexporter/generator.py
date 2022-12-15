@@ -1,5 +1,4 @@
 from typing import List
-from planprogenerator.config import Config
 from .planproxml import NodeXML, EdgeXML, SignalXML, RouteXML, RootXML, TripXML
 from yaramo.model import Topology, Trip, Signal, Route, Edge, Node
 
@@ -19,7 +18,7 @@ class Generator(object):
         self.trips = []
         self.routes = []
 
-    def generate(self, topology: Topology, config: Config, filename=None):
+    def generate(self, topology: Topology, author_name: str = 'NO AUTHOR', organisation: str = 'NO ORGANIZATION', filename=None):
         self.uuids = []
         self.geo_nodes = []
         self.geo_points = []
@@ -30,7 +29,6 @@ class Generator(object):
         self.control_elements = []
         self.trips = []
         self.routes = []
-        self.config = config
 
         # Create Trip
         trip = Trip(topology.edges.values())
@@ -65,7 +63,7 @@ class Generator(object):
         add_list_to_result_string(self.top_nodes)
 
         result_string = result_string + RootXML.get_accommodation_xml()
-        result_string = result_string + RootXML.get_suffix(self.uuids, self.config)
+        result_string = result_string + RootXML.get_suffix(self.uuids, author_name, organisation)
 
         if filename is None:
             return result_string
@@ -78,7 +76,7 @@ class Generator(object):
             self.uuids.append(node.uuid)
             self.uuids.append(node.geo_node.uuid)
             self.geo_nodes.append(NodeXML.get_geo_node_xml(node.geo_node, node.uuid))
-            self.geo_points.append(NodeXML.get_geo_point_xml(node.geo_node, node.uuid, self.config))
+            self.geo_points.append(NodeXML.get_geo_point_xml(node.geo_node, node.uuid))
             self.top_nodes.append(NodeXML.get_top_node_xml(node))
 
     def generate_edges(self, edges: List[Edge]):
@@ -106,7 +104,7 @@ class Generator(object):
                     NodeXML.get_geo_node_xml(intermediate_geo_node, edge_identifier)
                 )
                 self.geo_points.append(
-                    NodeXML.get_geo_point_xml(intermediate_geo_node, edge_identifier, self.config)
+                    NodeXML.get_geo_point_xml(intermediate_geo_node, edge_identifier)
                 )
 
     def generate_signals(self, signals: List[Signal]):

@@ -1,3 +1,4 @@
+from typing import List
 import uuid
 import datetime
 
@@ -111,7 +112,7 @@ class RootXML(object):
              + f"               </Unterbringung>" + "\n"
 
     @staticmethod
-    def get_suffix(uuids, config):
+    def get_suffix(uuids: List[str], author_name: str, organisation: str):
         uuids_string = ""
         uuids.append(RootXML.external_element_control_uuid)
         uuids.append(RootXML.accommondation_uuid)
@@ -327,13 +328,13 @@ class RootXML(object):
              + f"                  </Identitaet>" + "\n" \
              + f"                  <Akteur_Allg>" + "\n" \
              + f"                    <Name_Akteur>" + "\n" \
-             + f"                      <Wert>{config.author_name}</Wert>" + "\n" \
+             + f"                      <Wert>{author_name}</Wert>" + "\n" \
              + f"                    </Name_Akteur>" + "\n" \
              + f"                    <Name_Akteur_10>" + "\n" \
-             + f"                      <Wert>{config.author_name[:10]}</Wert>" + "\n" \
+             + f"                      <Wert>{author_name[:10]}</Wert>" + "\n" \
              + f"                    </Name_Akteur_10>" + "\n" \
              + f"                    <Name_Akteur_5>" + "\n" \
-             + f"                      <Wert>{config.author_name[:5]}</Wert>" + "\n" \
+             + f"                      <Wert>{author_name[:5]}</Wert>" + "\n" \
              + f"                    </Name_Akteur_5>" + "\n" \
              + f"                  </Akteur_Allg>" + "\n" \
              + f"                  <Kontaktdaten>" + "\n" \
@@ -341,7 +342,7 @@ class RootXML(object):
              + f"                      <Wert>55555555-5555-5555-5555-555555555555</Wert>" + "\n" \
              + f"                    </Identitaet>" + "\n" \
              + f"                    <Name_Organisation>" + "\n" \
-             + f"                      <Wert>{config.organisation}</Wert>" + "\n" \
+             + f"                      <Wert>{organisation}</Wert>" + "\n" \
              + f"                    </Name_Organisation>" + "\n" \
              + f"                  </Kontaktdaten>" + "\n" \
              + f"                </Projektleiter>" + "\n" \
