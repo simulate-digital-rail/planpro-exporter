@@ -46,7 +46,7 @@ class SignalXML(object):
              + f"              </Punkt_Objekt_Strecke>" + "\n" \
              + f"              <Punkt_Objekt_TOP_Kante>" + "\n" \
              + f"                <Abstand>" + "\n" \
-             + f"                  <Wert>{signal.distance_previous_node:.3f}</Wert>" + "\n" \
+             + f"                  <Wert>{signal.distance_edge:.3f}</Wert>" + "\n" \
              + f"                </Abstand>" + "\n" \
              + f"                <ID_TOP_Kante>" + "\n" \
              + f"                  <Wert>{signal.edge.uuid}</Wert>" + "\n" \
