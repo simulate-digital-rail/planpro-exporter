@@ -67,4 +67,7 @@ local.properties
 .idea
 __pycache__
 
+
+.vscode
+build
 venv
