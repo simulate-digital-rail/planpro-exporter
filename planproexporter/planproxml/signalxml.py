@@ -24,7 +24,7 @@ class SignalXML(object):
 
     @staticmethod
     def get_signal_xml(signal: Signal):
-        trip_length = f"{(signal.trip.get_length()/1000):.3f}".replace(".", ",")
+        trip_length = f"{(signal.trip.get_length()/10):.3f}".replace(".", ",")
 
         return f"            <Signal>" + "\n" \
              + f"              <Identitaet>" + "\n" \
@@ -75,7 +75,7 @@ class SignalXML(object):
              + f"                  <Wert>{signal.classification_number}</Wert>" + "\n" \
              + f"                </Kennzahl>" + "\n" \
              + f"                <Oertlicher_Elementname>" + "\n" \
-             + f"                  <Wert>{signal.name}</Wert>" + "\n" \
+             + f"                  <Wert>{signal.name[-6:]}</Wert>" + "\n" \
              + f"                </Oertlicher_Elementname>" + "\n" \
              + f"              </Bezeichnung>" + "\n" \
              + f"              <Signal_Real>" + "\n" \

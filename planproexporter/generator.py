@@ -76,7 +76,7 @@ class Generator(object):
             self.uuids.append(node.uuid)
             self.uuids.append(node.geo_node.uuid)
             self.geo_nodes.append(NodeXML.get_geo_node_xml(node.geo_node, node.uuid))
-            self.geo_points.append(NodeXML.get_geo_point_xml(node.geo_node, node.uuid))
+            self.geo_points.append(NodeXML.get_geo_point_xml(node.geo_node.to_dbref(), node.uuid))
             self.top_nodes.append(NodeXML.get_top_node_xml(node))
 
     def generate_edges(self, edges: List[Edge]):
@@ -104,7 +104,7 @@ class Generator(object):
                     NodeXML.get_geo_node_xml(intermediate_geo_node, edge_identifier)
                 )
                 self.geo_points.append(
-                    NodeXML.get_geo_point_xml(intermediate_geo_node, edge_identifier)
+                    NodeXML.get_geo_point_xml(intermediate_geo_node.to_dbref(), edge_identifier)
                 )
 
     def generate_signals(self, signals: List[Signal]):

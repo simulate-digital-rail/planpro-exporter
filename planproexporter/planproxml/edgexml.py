@@ -8,10 +8,10 @@ class EdgeXML(object):
     def get_top_edge_xml(edge: Edge):
         connection_a = "Ende"
         if len(edge.node_a.connected_nodes) > 1:
-            connection_a = edge.node_a.get_anschluss_of_other(edge.node_b).name.lower()
+            connection_a = edge.node_a.get_anschluss_of_other(edge.node_b).name
         connection_b = "Ende"
         if len(edge.node_b.connected_nodes) > 1:
-            connection_b = edge.node_b.get_anschluss_of_other(edge.node_a).name.lower()
+            connection_b = edge.node_b.get_anschluss_of_other(edge.node_a).name
         return f"            <TOP_Kante> <!-- {edge.node_a.uuid} to {edge.node_b.uuid} -->\n" \
                + f"              <Identitaet>\n" \
                + f"                <Wert>{edge.uuid}</Wert>\n" \
