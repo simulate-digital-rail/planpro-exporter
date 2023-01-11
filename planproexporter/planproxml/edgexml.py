@@ -12,7 +12,7 @@ class EdgeXML(object):
         connection_b = "Ende"
         if len(edge.node_b.connected_nodes) > 1:
             connection_b = edge.node_b.get_anschluss_of_other(edge.node_a).name
-        return f"            <TOP_Kante> <!-- {edge.node_a.uuid} to {edge.node_b.uuid} -->\n" \
+        return f"            <TOP_Kante> <!-- {edge.node_a} to {edge.node_b} -->\n" \
                + f"              <Identitaet>\n" \
                + f"                <Wert>{edge.uuid}</Wert>\n" \
                + f"              </Identitaet>\n" \
@@ -23,10 +23,10 @@ class EdgeXML(object):
                + f"              </Basis_Objekt_Allg>\n" \
                + f"              <Objektreferenzen/>\n" \
                + f"              <ID_TOP_Knoten_A>\n" \
-               + f"                <Wert>{edge.node_a.uuid}</Wert> <!-- {edge.node_a.uuid} -->\n" \
+               + f"                <Wert>{edge.node_a.uuid}</Wert> <!-- {edge.node_a} -->\n" \
                + f"              </ID_TOP_Knoten_A>\n" \
                + f"              <ID_TOP_Knoten_B>\n" \
-               + f"                <Wert>{edge.node_b.uuid}</Wert> <!-- {edge.node_b.uuid} -->\n" \
+               + f"                <Wert>{edge.node_b.uuid}</Wert> <!-- {edge.node_b} -->\n" \
                + f"              </ID_TOP_Knoten_B>\n" \
                + f"              <TOP_Kante_Allg>\n" \
                + f"                <TOP_Anschluss_A>\n" \
@@ -45,7 +45,7 @@ class EdgeXML(object):
     def get_geo_edge_xml(geo_node_a: GeoNode, geo_node_b: GeoNode, uuid, top_edge: Edge):
         length = geo_node_a.get_distance_to_other_geo_node(geo_node_b)
 
-        return f"            <GEO_Kante> <!-- {top_edge.node_a.uuid} to {top_edge.node_b.uuid} -->\n" \
+        return f"            <GEO_Kante> <!-- {top_edge.node_a} to {top_edge.node_b} -->\n" \
              + f"              <Identitaet>\n" \
              + f"                <Wert>{uuid}</Wert>\n" \
              + f"              </Identitaet>\n" \
