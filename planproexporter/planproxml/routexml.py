@@ -38,14 +38,14 @@ class RouteXML(object):
             distance_b = cur_edge.length
             if i == 0:
                 # Start edge
-                distance_a = route.start_signal.distance_previous_node
+                distance_a = route.start_signal.distance_edge
                 if route.start_signal.direction == SignalDirection.GEGEN:
                     distance_b = 0.0
             elif i == len(edges_in_order) - 1:
                 # End edge
                 if route.end_signal.direction == SignalDirection.GEGEN:
                     distance_a = cur_edge.length
-                distance_b = route.end_signal.distance_previous_node
+                distance_b = route.end_signal.distance_edge
             all_xml = all_xml + RouteXML.get_section_xml(cur_edge, distance_a, distance_b)
         return all_xml
 
