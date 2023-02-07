@@ -24,7 +24,7 @@ class SignalXML(object):
 
     @staticmethod
     def get_signal_xml(signal: Signal):
-        trip_length = f"{(signal.trip.get_length()/10):.3f}".replace(".", ",")
+        trip_length = f"{(signal.trip.get_length()/100):.3f}".replace(".", ",")
 
         return f"            <Signal>" + "\n" \
              + f"              <Identitaet>" + "\n" \
