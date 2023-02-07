@@ -41,7 +41,7 @@ class Generator(object):
         self.generate_edges(list(topology.edges.values()))
         self.generate_signals(list(topology.signals.values()))
         self.generate_trips([trip])
-        self.generate_routes(topology.routes)
+        self.generate_routes(list(topology.routes.values()))
 
         result_string = ""
         result_string = result_string + RootXML.get_prefix_xml()
