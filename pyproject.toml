@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "planpro-exporter"
-version = "0.9"
+version = "1.0"
 description = ""
-authors = ["HPI OSM <OSM@HPI>"]
+authors = ["OSM at HPI <arne.boockmeyer@hpi.de>"]
 readme = "README.md"
 packages = [{include = "planproexporter"}]
 
