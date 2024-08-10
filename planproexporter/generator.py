@@ -1,3 +1,4 @@
+from datetime import date
 from typing import List
 from .planproxml import NodeXML, EdgeXML, SignalXML, RouteXML, RootXML, TripXML
 from yaramo.model import Topology, Trip, Signal, Route, Edge, Node
@@ -63,6 +64,12 @@ class Generator(object):
         add_list_to_result_string(self.top_nodes)
 
         result_string = result_string + RootXML.get_accommodation_xml()
+        if not topology.status_information:
+            topology.status_information[topology.current_status] = {
+                "name": author_name,
+                "organization": organisation,
+                "date": date.today().isoformat(),
+            }
         result_string = result_string + RootXML.get_suffix(self.uuids, author_name, organisation, RootXML.get_planning_states(topology.status_information))
 
         if filename is None:
