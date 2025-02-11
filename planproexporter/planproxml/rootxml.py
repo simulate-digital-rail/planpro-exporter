@@ -1,6 +1,7 @@
 from typing import List
 import uuid
 import datetime
+from yaramo.topology import PlanningState
 
 
 class RootXML(object):
@@ -112,7 +113,7 @@ class RootXML(object):
              + f"               </Unterbringung>" + "\n"
 
     @staticmethod
-    def get_suffix(uuids: List[str], author_name: str, organisation: str):
+    def get_suffix(uuids: List[str], author_name: str, organisation: str, states: str):
         uuids_string = ""
         uuids.append(RootXML.external_element_control_uuid)
         uuids.append(RootXML.accommondation_uuid)
@@ -180,6 +181,9 @@ class RootXML(object):
              + f"                      <Wert>PT_1</Wert>" + "\n" \
              + f"                    </Planung_Phase>" + "\n" \
              + f"                  </Planung_E_Allg>" + "\n" \
+             + f"                  <Planung_E_Handlung>" + "\n" \
+             + f"{states}" \
+             + f"                  </Planung_E_Handlung>" + "\n" \
              + f"                  <Planung_E_Ausgabe_Besonders>" + "\n" \
              + f"                    <Referenz_Vergleich_Besonders>" + "\n" \
              + f"                      <Wert>12345-67890</Wert>" + "\n" \
@@ -191,62 +195,6 @@ class RootXML(object):
              + f"                      <Wert>sonstige</Wert>" + "\n" \
              + f"                    </Vergleichstyp_Besonders>" + "\n" \
              + f"                  </Planung_E_Ausgabe_Besonders>" + "\n" \
-             + f"                  <Planung_E_Handlung>" + "\n" \
-             + f"                    <Planung_E_Erstellung>" + "\n" \
-             + f"                      <Identitaet>" + "\n" \
-             + f"                        <Wert>1A3E6734-9E68-40FC-8C3F-D231E98146FF</Wert>" + "\n" \
-             + f"                      </Identitaet>" + "\n" \
-             + f"                      <Anhang_Dokumentation>" + "\n" \
-             + f"                          <Identitaet>" + "\n" \
-             + f"                            <Wert>1A3E6734-9E68-40FC-8C3F-D23DE98246FF</Wert>" + "\n" \
-             + f"                          </Identitaet>" + "\n" \
-             + f"                          <Anhang_Allg>" + "\n" \
-             + f"                            <Anhang_Art>" + "\n" \
-             + f"                              <Wert>Erlaeuterungsbericht</Wert>" + "\n" \
-             + f"                            </Anhang_Art>" + "\n" \
-             + f"                            <Dateiname>" + "\n" \
-             + f"                              <Wert>Erläuterungsbericht-Scheibenberg</Wert>" + "\n" \
-             + f"                            </Dateiname>" + "\n" \
-             + f"                            <Dateityp>" + "\n" \
-             + f"                              <Wert>pdf</Wert>" + "\n" \
-             + f"                            </Dateityp>" + "\n" \
-             + f"                            <Daten>" + "\n" \
-             + f"                                <Wert></Wert>" + "\n" \
-             + f"                            </Daten>" + "\n" \
-             + f"                          </Anhang_Allg>" + "\n" \
-             + f"                        </Anhang_Dokumentation>" + "\n" \
-             + f"                      <Datum>" + "\n" \
-             + f"                        <Wert>2015-11-03</Wert>" + "\n" \
-             + f"                      </Datum>" + "\n" \
-             + f"                      <Handelnder>" + "\n" \
-             + f"                        <Identitaet>" + "\n" \
-             + f"                          <Wert>60024045-7D4E-4C59-98AC-088D437D4B7A</Wert>" + "\n" \
-             + f"                        </Identitaet>" + "\n" \
-             + f"                        <Akteur_Allg>" + "\n" \
-             + f"                          <Name_Akteur>" + "\n" \
-             + f"                            <Wert>Boockmeyer</Wert>" + "\n" \
-             + f"                          </Name_Akteur>" + "\n" \
-             + f"                          <Name_Akteur_10>" + "\n" \
-             + f"                            <Wert>Boockmeyer</Wert>" + "\n" \
-             + f"                          </Name_Akteur_10>" + "\n" \
-             + f"                          <Name_Akteur_5>" + "\n" \
-             + f"                            <Wert>Boock</Wert>" + "\n" \
-             + f"                          </Name_Akteur_5>" + "\n" \
-             + f"                        </Akteur_Allg>" + "\n" \
-             + f"                        <Kontaktdaten>" + "\n" \
-             + f"                          <Identitaet>" + "\n" \
-             + f"                            <Wert>55555555-5555-5555-5555-555555555555</Wert>" + "\n" \
-             + f"                          </Identitaet>" + "\n" \
-             + f"                          <Name_Organisation>" + "\n" \
-             + f"                            <Wert>HPI-OSM</Wert>" + "\n" \
-             + f"                          </Name_Organisation>" + "\n" \
-             + f"                        </Kontaktdaten>" + "\n" \
-             + f"                      </Handelnder>" + "\n" \
-             + f"                      <Ident_Rolle>" + "\n" \
-             + f"                        <Wert>Planer</Wert>" + "\n" \
-             + f"                      </Ident_Rolle>" + "\n" \
-             + f"                    </Planung_E_Erstellung>" + "\n" \
-             + f"                  </Planung_E_Handlung>" + "\n" \
              + f"                </LST_Planung_Einzel>" + "\n" \
              + f"                <Planung_G_Allg>" + "\n" \
              + f"                  <Datum_Abschluss_Gruppe>" + "\n" \
@@ -355,3 +303,71 @@ class RootXML(object):
     @staticmethod
     def get_root_uuids():
         return [RootXML.ausgabe_fachdaten_uuid, RootXML.accommondation_uuid, RootXML.external_element_control_uuid]
+
+    @staticmethod
+    def get_planning_states(states_dict: dict):
+          state_string = {
+               PlanningState.erstellt: "Erstellung",
+               PlanningState.qualitaetsgeprueft: "Qualitaetspruefung",
+               PlanningState.plangeprueft: "Pruefung",
+               PlanningState.freigegeben: "Freigabe",
+               PlanningState.genehmigt: "Genehmigung",
+               PlanningState.abgenommen: "Abnahme",
+               PlanningState.uebernommen: "Uebernahme",
+               PlanningState.gleichgestellt: "Gleichstellung",
+               PlanningState.sonstige: "Sonstige",
+          }
+          xml_string = ""
+          for state, information in states_dict.items():
+               xml_string += f"                    <Planung_E_{state_string[PlanningState(int(state))]}>" + "\n"
+               xml_string += f"                      <Identitaet>" + "\n"
+               xml_string += f"                        <Wert>{uuid.uuid4()}</Wert>" + "\n"
+               xml_string += f"                      </Identitaet>" + "\n"
+               xml_string += f"                      <Anhang_Dokumentation>" + "\n"
+               xml_string += f"                          <Identitaet>" + "\n"
+               xml_string += f"                            <Wert>1A3E6734-9E68-40FC-8C3F-D23DE98246FF</Wert>" + "\n"
+               xml_string += f"                          </Identitaet>" + "\n"
+               xml_string += f"                          <Anhang_Allg>" + "\n"
+               xml_string += f"                            <Anhang_Art>" + "\n"
+               xml_string += f"                              <Wert>Erlaeuterungsbericht</Wert>" + "\n"
+               xml_string += f"                            </Anhang_Art>" + "\n"
+               xml_string += f"                            <Dateiname>" + "\n"
+               xml_string += f"                              <Wert>Erläuterungsbericht</Wert>" + "\n"
+               xml_string += f"                            </Dateiname>" + "\n"
+               xml_string += f"                            <Dateityp>" + "\n"
+               xml_string += f"                              <Wert>pdf</Wert>" + "\n"
+               xml_string += f"                            </Dateityp>" + "\n"
+               xml_string += f"                            <Daten>" + "\n"
+               xml_string += f"                                <Wert></Wert>" + "\n"
+               xml_string += f"                            </Daten>" + "\n"
+               xml_string += f"                          </Anhang_Allg>" + "\n"
+               xml_string += f"                        </Anhang_Dokumentation>" + "\n"
+               xml_string += f"                      <Datum>" + "\n"
+               xml_string += f"                        <Wert>{information['date']}</Wert>" + "\n"
+               xml_string += f"                      </Datum>" + "\n"
+               xml_string += f"                      <Handelnder>" + "\n"
+               xml_string += f"                        <Identitaet>" + "\n"
+               xml_string += f"                          <Wert>{uuid.uuid4()}</Wert>" + "\n"
+               xml_string += f"                        </Identitaet>" + "\n"
+               xml_string += f"                        <Akteur_Allg>" + "\n"
+               xml_string += f"                          <Name_Akteur>" + "\n"
+               xml_string += f"                            <Wert>{information['name']}</Wert>" + "\n"
+               xml_string += f"                          <Name_Akteur>" + "\n"
+               xml_string += f"                          <Name_Akteur_10>" + "\n"
+               xml_string += f"                            <Wert>{information['name'][:10]}</Wert>" + "\n"
+               xml_string += f"                          <Name_Akteur_10>" + "\n"
+               xml_string += f"                          <Name_Akteur_5>" + "\n"
+               xml_string += f"                            <Wert>{information['name'][:5]}</Wert>" + "\n"
+               xml_string += f"                          <Name_Akteur_5>" + "\n"
+               xml_string += f"                        </Akteur_Allg>" + "\n"
+               xml_string += f"                      </Handelnder>" + "\n"
+               xml_string += f"                      <Kontaktdaten>" + "\n"
+               xml_string += f"                        <Identitaet>" + "\n"
+               xml_string += f"                          <Wert>{uuid.uuid4()}</Wert>" + "\n"
+               xml_string += f"                        </Identitaet>" + "\n"
+               xml_string += f"                        <Name_Organisation>" + "\n"
+               xml_string += f"                          <Wert>{information['organization']}</Wert>" + "\n"
+               xml_string += f"                        </Name_Organisation>" + "\n"
+               xml_string += f"                      </Kontaktdaten>" + "\n"
+               xml_string += f"                    </Planung_E_{state_string[PlanningState(int(state))]}>" + "\n"
+          return xml_string
