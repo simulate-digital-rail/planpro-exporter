@@ -184,17 +184,6 @@ class RootXML(object):
              + f"                  <Planung_E_Handlung>" + "\n" \
              + f"{states}" \
              + f"                  </Planung_E_Handlung>" + "\n" \
-             + f"                  <Planung_E_Ausgabe_Besonders>" + "\n" \
-             + f"                    <Referenz_Vergleich_Besonders>" + "\n" \
-             + f"                      <Wert>12345-67890</Wert>" + "\n" \
-             + f"                    </Referenz_Vergleich_Besonders>" + "\n" \
-             + f"                    <Vergleich_Ausgabestand_Basis>" + "\n" \
-             + f"                      <Wert>2019-07-31</Wert>" + "\n" \
-             + f"                    </Vergleich_Ausgabestand_Basis>" + "\n" \
-             + f"                    <Vergleichstyp_Besonders>" + "\n" \
-             + f"                      <Wert>sonstige</Wert>" + "\n" \
-             + f"                    </Vergleichstyp_Besonders>" + "\n" \
-             + f"                  </Planung_E_Ausgabe_Besonders>" + "\n" \
              + f"                </LST_Planung_Einzel>" + "\n" \
              + f"                <Planung_G_Allg>" + "\n" \
              + f"                  <Datum_Abschluss_Gruppe>" + "\n" \
@@ -352,22 +341,22 @@ class RootXML(object):
                xml_string += f"                        <Akteur_Allg>" + "\n"
                xml_string += f"                          <Name_Akteur>" + "\n"
                xml_string += f"                            <Wert>{information['name']}</Wert>" + "\n"
-               xml_string += f"                          <Name_Akteur>" + "\n"
+               xml_string += f"                          </Name_Akteur>" + "\n"
                xml_string += f"                          <Name_Akteur_10>" + "\n"
                xml_string += f"                            <Wert>{information['name'][:10]}</Wert>" + "\n"
-               xml_string += f"                          <Name_Akteur_10>" + "\n"
+               xml_string += f"                          </Name_Akteur_10>" + "\n"
                xml_string += f"                          <Name_Akteur_5>" + "\n"
                xml_string += f"                            <Wert>{information['name'][:5]}</Wert>" + "\n"
-               xml_string += f"                          <Name_Akteur_5>" + "\n"
+               xml_string += f"                          </Name_Akteur_5>" + "\n"
                xml_string += f"                        </Akteur_Allg>" + "\n"
+               xml_string += f"                        <Kontaktdaten>" + "\n"
+               xml_string += f"                          <Identitaet>" + "\n"
+               xml_string += f"                            <Wert>{uuid.uuid4()}</Wert>" + "\n"
+               xml_string += f"                          </Identitaet>" + "\n"
+               xml_string += f"                          <Name_Organisation>" + "\n"
+               xml_string += f"                            <Wert>{information['organization']}</Wert>" + "\n"
+               xml_string += f"                          </Name_Organisation>" + "\n"
+               xml_string += f"                        </Kontaktdaten>" + "\n"
                xml_string += f"                      </Handelnder>" + "\n"
-               xml_string += f"                      <Kontaktdaten>" + "\n"
-               xml_string += f"                        <Identitaet>" + "\n"
-               xml_string += f"                          <Wert>{uuid.uuid4()}</Wert>" + "\n"
-               xml_string += f"                        </Identitaet>" + "\n"
-               xml_string += f"                        <Name_Organisation>" + "\n"
-               xml_string += f"                          <Wert>{information['organization']}</Wert>" + "\n"
-               xml_string += f"                        </Name_Organisation>" + "\n"
-               xml_string += f"                      </Kontaktdaten>" + "\n"
                xml_string += f"                    </Planung_E_{state_string[state]}>" + "\n"
           return xml_string
