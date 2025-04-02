@@ -1,5 +1,4 @@
 from yaramo.model import Edge, GeoNode
-import math
 
 
 class EdgeXML(object):
@@ -7,11 +6,11 @@ class EdgeXML(object):
     @staticmethod
     def get_top_edge_xml(edge: Edge):
         connection_a = "Ende"
-        if len(edge.node_a.connected_nodes) > 1:
-            connection_a = edge.node_a.get_anschluss_of_other(edge.node_b).name
+        if edge.node_a.is_point():
+            connection_a = edge.node_a.get_anschluss_for_edge(edge).name
         connection_b = "Ende"
-        if len(edge.node_b.connected_nodes) > 1:
-            connection_b = edge.node_b.get_anschluss_of_other(edge.node_a).name
+        if edge.node_b.is_point():
+            connection_b = edge.node_b.get_anschluss_for_edge(edge).name
         return f"            <TOP_Kante> <!-- {edge.node_a} to {edge.node_b} -->\n" \
                + f"              <Identitaet>\n" \
                + f"                <Wert>{edge.uuid}</Wert>\n" \

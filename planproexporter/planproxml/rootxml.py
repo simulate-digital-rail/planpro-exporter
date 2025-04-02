@@ -319,7 +319,7 @@ class RootXML(object):
           }
           xml_string = ""
           for state, information in states_dict.items():
-               xml_string += f"                    <Planung_E_{state_string[PlanningState(int(state))]}>" + "\n"
+               xml_string += f"                    <Planung_E_{state_string[state]}>" + "\n"
                xml_string += f"                      <Identitaet>" + "\n"
                xml_string += f"                        <Wert>{uuid.uuid4()}</Wert>" + "\n"
                xml_string += f"                      </Identitaet>" + "\n"
@@ -369,5 +369,5 @@ class RootXML(object):
                xml_string += f"                          <Wert>{information['organization']}</Wert>" + "\n"
                xml_string += f"                        </Name_Organisation>" + "\n"
                xml_string += f"                      </Kontaktdaten>" + "\n"
-               xml_string += f"                    </Planung_E_{state_string[PlanningState(int(state))]}>" + "\n"
+               xml_string += f"                    </Planung_E_{state_string[state]}>" + "\n"
           return xml_string
