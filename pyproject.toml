@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "planpro-exporter"
-version = "2.0"
+version = "3.0"
 description = ""
 authors = ["OSM at HPI <arne.boockmeyer@hpi.de>"]
 readme = "README.md"
@@ -8,7 +8,7 @@ packages = [{include = "planproexporter"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-yaramo = {git = "https://github.com/simulate-digital-rail/yaramo", tag = "v1.0"}
+yaramo = {git = "https://github.com/simulate-digital-rail/yaramo", branch = "yaramo2"}
 
 
 [build-system]
