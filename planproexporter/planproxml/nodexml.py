@@ -27,10 +27,10 @@ class NodeXML(object):
                + f"                  <Wert>{geonode.y:.5f}</Wert>\n" \
                + f"                </GK_Y>\n" \
                + f"                <Plan_Quelle>\n" \
-               + f"                  <Wert>Ivl</Wert>\n" \
+               + f"                  <Wert>{geonode.data_source}</Wert>\n" \
                + f"                </Plan_Quelle>\n" \
                + f"                <GEO_KoordinatenSystem_LSys>\n" \
-               + f"                  <Wert>EA0</Wert>\n" \
+               + f"                  <Wert>{geonode.dbref_crs}</Wert>\n" \
                + f"                </GEO_KoordinatenSystem_LSys>\n" \
                + f"              </GEO_Punkt_Allg>\n" \
                + f"              <ID_GEO_Knoten>\n" \
