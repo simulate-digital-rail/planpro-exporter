@@ -1,12 +1,17 @@
 from yaramo.model import Node, GeoNode
+import uuid
+import random
 
 class NodeXML(object):
 
     @staticmethod
     def get_geo_point_xml(geonode: GeoNode, identifier: str):
+        rd = random.Random()
+        rd.seed(int(uuid.UUID(geonode.uuid)))
+        geo_point_uuid = str(uuid.UUID(int=rd.getrandbits(128), version=4))
         return f"            <GEO_Punkt> <!-- {identifier} -->\n" \
                + f"              <Identitaet>\n" \
-               + f"                <Wert>{geonode.geo_point.uuid}</Wert>\n" \
+               + f"                <Wert>{geo_point_uuid}</Wert>\n" \
                + f"              </Identitaet>\n" \
                + f"              <Basis_Objekt_Allg>\n" \
                + f"                <Datum_Regelwerk>\n" \
@@ -16,16 +21,16 @@ class NodeXML(object):
                + f"              <Objektreferenzen/>\n" \
                + f"              <GEO_Punkt_Allg>\n" \
                + f"                <GK_X>\n" \
-               + f"                  <Wert>{geonode.geo_point.x:.5f}</Wert>\n" \
+               + f"                  <Wert>{geonode.x:.5f}</Wert>\n" \
                + f"                </GK_X>\n" \
                + f"                <GK_Y>\n" \
-               + f"                  <Wert>{geonode.geo_point.y:.5f}</Wert>\n" \
+               + f"                  <Wert>{geonode.y:.5f}</Wert>\n" \
                + f"                </GK_Y>\n" \
                + f"                <Plan_Quelle>\n" \
-               + f"                  <Wert>Ivl</Wert>\n" \
+               + f"                  <Wert>{geonode.data_source}</Wert>\n" \
                + f"                </Plan_Quelle>\n" \
                + f"                <GEO_KoordinatenSystem_LSys>\n" \
-               + f"                  <Wert>EA0</Wert>\n" \
+               + f"                  <Wert>{geonode.dbref_crs}</Wert>\n" \
                + f"                </GEO_KoordinatenSystem_LSys>\n" \
                + f"              </GEO_Punkt_Allg>\n" \
                + f"              <ID_GEO_Knoten>\n" \
